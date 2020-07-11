@@ -1,0 +1,143 @@
+cli phases 
+
+now
+ 
+  same for librarian and user
+
+later
+
+  1>librarian
+  2>user
+
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>searching mechanism<<<<<<<<<<<<<<<<<<<
+
+according to 
+1 isbn
+2 category
+3 author
+4 book name
+5 see all books
+6 available books        --later
+7 most borrowed books    --later
+8 user borrowed books    --later
+9 recently available books   --later
+
+--------------------------librarian---------------------
+
+1 able to add a book in library (new book)
+    --> cmd as ( add new isbn=__ title=__ author=__ category=__ )
+      
+
+        --> book =>(+) isbn, title, category
+        --> copies =>(+) isbn, serialNo
+
+2 able to add a book (already present)
+
+    --> cmd as ( add isbn=__ )
+
+    if isbn present
+        --> copies  =>(+) isbn, serialNo(new)
+
+    if not 
+        --> book is not present give all details
+
+
+
+--------------------------user----------------------------
+
+1 can borrow a book
+
+    --> cmd as ( borrow user_name=__ title=__ )
+    or
+    --> cmd as ( borrow user_name=__ isbn=__ )
+    or
+    --> cmd as ( borrow user_name=__ serialNo=__ )
+
+step 1
+    search according to attribute given ==> returns ( serialNo if present ) 
+    other wise go out of steps and given book not available
+
+step 2 
+    --> make that copy unavailable in book_copy
+    --> update register with (serialNo, action, date , user_name)
+
+step 3 
+    --> give ok (or) given book not available
+
+------------------------
+
+2 can return a book
+
+    --> cmd as ( return serialNo=__ )
+
+    steps
+
+    -->make book available in copy
+    --> update register with (serialNo, action, date, id)
+
+
+------------------
+
+cli ---> user
+      |--->librarian
+
+--------------------
+Library:=>
+login --- choose interface according to account
+register --- ask designation
+
+
+member:=>
+what books he had taken
+returned books
+name
+change password
+borrow book
+return book
+show (all)
+select (all)
+delete account
+
+
+librarian:=>
+add book
+add copy
+remove book
+show(all)
+select(all)
+issue book
+withdraw book
+delete account
+
+
+------------schema for login---------
+user->table:= userId: unique
+              username: not null
+              password: not null
+              domain: default borrower otherwise librarian
+
+------------schema for register------
+
+register->table:= id not null
+                  action not null
+                  serialNumber not null
+                  borrow_at 
+                  due_date
+                  returned_at
+
+
+----------------------------------------------------------
+
+register => every thing from ( borrowedTransaction left join resolvedTransaction )
+
+borrowedTransaction
+                  transactionId not null
+                  userId not null
+                  serialNumber not null
+                  borrow_at 
+                  due_dated
+
+resolvedTransaction
+                  transactionId not null
+                  returned_at

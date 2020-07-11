@@ -1,0 +1,25 @@
+{
+  "name": "library-management",
+  "version": "1.0.0",
+  "description": "",
+  "main": "library.js",
+  "scripts": {
+    "start": "rm *.db && node main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/imvaishu/library-management.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/imvaishu/library-management/issues"
+  },
+  "homepage": "https://github.com/imvaishu/library-management#readme",
+  "dependencies": {
+    "cli-table": "^0.3.1",
+    "sqlite3": "^5.0.0",
+    "vorpal": "^1.12.0"
+  }
+}
