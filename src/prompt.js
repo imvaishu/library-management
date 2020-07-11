@@ -118,7 +118,7 @@ const search = [
   },
 ];
 
-const signIn = [
+const signUp = [
   {
     name: 'id',
     message: 'Enter your user name    : ',
@@ -139,7 +139,7 @@ const signIn = [
   },
 ];
 
-const login = [
+const signIn = [
   {
     name: 'id',
     message: 'Enter your user name : ',
@@ -161,6 +161,6 @@ module.exports = {
   returnBook,
   showTable,
   search,
+  signUp,
   signIn,
-  login,
 };

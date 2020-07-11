@@ -25,17 +25,17 @@ const printRow = function (detail) {
   printRows([detail]);
 };
 
-const logout = function (vorpal) {
-  vorpal.command('logout').action(function (argument, callback) {
+const signOut = function (vorpal) {
+  vorpal.command('signOut').action(function (argument, callback) {
     interfaceInstances.main.show();
     callback();
   });
   return vorpal;
 };
 
-const addLogin = function (vorpal) {
-  vorpal.command('login').action(function (argument, callback) {
-    this.prompt(prompts.login)
+const addSignIn = function (vorpal) {
+  vorpal.command('signIn').action(function (argument, callback) {
+    this.prompt(prompts.signIn)
       .then(({ id, password }) =>
         library.validatePassword(sqlite, id, password)
       )
@@ -48,9 +48,9 @@ const addLogin = function (vorpal) {
   });
 };
 
-const addSignIn = function (vorpal) {
-  vorpal.command('signIn').action(function (argument, callback) {
-    this.prompt(prompts.signIn)
+const addSignUp = function (vorpal) {
+  vorpal.command('signUp').action(function (argument, callback) {
+    this.prompt(prompts.signUp)
       .then((details) => library.registerUser(sqlite, details))
       .then(printRow)
       .catch(printRow)
@@ -130,8 +130,8 @@ const addActivity = function (vorpal) {
 
 const createMainInterface = function () {
   const vorpal = new Vorpal();
-  addLogin(vorpal);
   addSignIn(vorpal);
+  addSignUp(vorpal);
 
   library.registerUser(sqlite, librarian, 'librarian');
   vorpal.delimiter(vorpal.chalk.yellow('Library $ '));
@@ -140,7 +140,7 @@ const createMainInterface = function () {
 
 const createLibrarianInterface = function () {
   const vorpal = new Vorpal();
-  vorpal.use(logout);
+  vorpal.use(signOut);
   addBook(vorpal);
   addCopy(vorpal);
   addShowTables(vorpal);
@@ -152,7 +152,7 @@ const createLibrarianInterface = function () {
 
 const createBorrowerInterface = function () {
   const vorpal = new Vorpal();
-  vorpal.use(logout);
+  vorpal.use(signOut);
   addBorrowBook(vorpal);
   addReturnBook(vorpal);
   addSearch(vorpal);
